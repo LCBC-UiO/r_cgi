@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>R CGI examples</title>
+</head>
+<body>
+  <form>
+    <label for="inpWidth">Width</label>
+    <input type="range" id="inpWidth" name="width" min="100" max="800" value="400">
+    <br>
+    <label for="inpHeight">Height</label>
+    <input type="range" id="inpHeight" name="width" min="100" max="600" value="400">
+    <br>
+    <label for="inpTitle">Title</label>
+    <input type="text" id="inpTitle" name="title" value="Title of plot">
+    <br>
+    <label for="inpShowLegend">Show legend</label>
+    <input type="checkbox" id="inpShowLegend" name="showLegend" checked>
+  </form>
+  <hr>
+  <p>Plot from server running R:</p>
+  <img id="imgPlot">
+  <script>
+    function updatePlot() {
+      const width = document.querySelector("#inpWidth").value;
+      const height = document.querySelector("#inpHeight").value;
+      const title = encodeURI(document.querySelector("#inpTitle").value)
+      const showLegend = document.querySelector("#inpShowLegend").checked ? 1 : 0;
+      document.querySelector("#imgPlot").src = `get_plot_png.cgi?width=${width}&height=${height}&showLegend=${showLegend}&title=${title}`;
+    }
+
+    updatePlot();
+
+    document.querySelector("#inpWidth").addEventListener('change', updatePlot, false);
+    document.querySelector("#inpHeight").addEventListener('change', updatePlot, false);
+    document.querySelector("#inpShowLegend").addEventListener('change', updatePlot, false);
+    document.querySelector("#inpTitle").addEventListener('input', updatePlot, false);
+  </script>
+</body>
+</html>

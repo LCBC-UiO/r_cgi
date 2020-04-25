@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+</head>
+<body>
+
+  <form>
+    <div>
+      <label>Select table to upload (use provided 'test_table.csv'). It will be written by the server to /tmp</label><br>
+      <input id='fileinput' type="file">
+    </div>
+    <hr>
+    <div id="response-header"></div>
+    <div id="response-payload"></code>
+  </form>
+  
+
+  <script>
+    const input = document.getElementById('fileinput');
+
+    const onSelectFile = async function() {
+      const ret = await fetch('./post_file.cgi', {
+        method: 'POST',
+        body: input.files[0],
+      });
+      console.log(ret);
+      ret_json = await ret.json();
+      document.getElementById('response-header').innerHTML = 
+        `${(new Date()).toLocaleTimeString()} - response status: ${ret.status} ${ret.statusText}`;
+        document.getElementById('response-payload').innerHTML = ret_json["message_from_r"];
+    }
+
+    input.addEventListener('change', onSelectFile, false);
+  </script>
+</body>
+</html>
