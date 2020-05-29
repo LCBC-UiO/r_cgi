@@ -12,6 +12,7 @@ Example CGI scripts in R
 
   * Linux / Mac OS
   * build tools (make, gcc, ...)
+  * wget
   * Rscript in PATH
 
 ## Examples
